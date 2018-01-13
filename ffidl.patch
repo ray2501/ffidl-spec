@@ -1,0 +1,15 @@
+--- configure.ac
++++ configure.ac
+@@ -161,6 +161,12 @@ case $libffi,$ffcall in
+ 	FFIDL_FFLIB=ffcall
+ 	AC_MSG_RESULT([ffcall])
+   ;;
++  system,no)
++	AC_DEFINE(USE_LIBFFI, 1, [Use libffi for foreign function calls])
++	TEA_ADD_LIBS([-lffi])
++	FFIDL_FFLIB=
++	AC_MSG_RESULT([libffi (system-supplied)])
++  ;;
+   yes,yes)
+           AC_MSG_ERROR([You cannot use both --enable-libffi and --enable-ffcall.])
+   ;;
