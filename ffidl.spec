@@ -4,6 +4,7 @@ Version: 0.7
 Release: 1
 License: BSD
 Group: Development/Libraries/Tcl
+BuildRequires: autoconf
 BuildRequires: tcl-devel >= 8.6
 BuildRequires: libffi-devel
 Requires: tcl >= 8.6
