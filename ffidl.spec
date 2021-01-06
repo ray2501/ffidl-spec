@@ -1,6 +1,6 @@
 Summary: Extension for Calling C Libraries from Tcl
 Name: ffidl
-Version: 0.7
+Version: 0.8b0
 Release: 1
 License: BSD
 Group: Development/Libraries/Tcl
@@ -9,8 +9,8 @@ BuildRequires: tcl-devel >= 8.6
 BuildRequires: libffi-devel
 Requires: tcl >= 8.6
 URL: https://github.com/prs-de/ffidl
-Source0: %{name}.tar.bz2
-Patch0: ffidl.patch
+Source0: %{name}-%{version}.tar.gz
+Patch0:  ffidl.c.patch
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root
 
 %description
@@ -19,15 +19,17 @@ calling any shared library installed on your system, including the Tcl
 and Tk core libraries.
 
 %prep
-%setup -q -n %name
+%setup -q -n %name-%version
 %patch0
 
 %build
 autoconf
 ./configure \
+    --enable-64bit \
 	--with-tcl=%_libdir \
 	--libdir=%tcl_archdir \
-	--enable-libffi=system \
+	--with-libffi \
+    --enable-libffi-static=no \
 	--enable-stubs \
 	--enable-callbacks
 make

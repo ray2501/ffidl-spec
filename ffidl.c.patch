@@ -1,0 +1,51 @@
+--- generic/ffidl.c.orig	2021-01-06 20:57:14.545213190 +0800
++++ generic/ffidl.c	2021-01-06 21:47:23.923466626 +0800
+@@ -1623,7 +1623,13 @@
+ #  if defined(X86_WIN64)
+     } else if (strcmp(*protocolnamep, "win64") == 0) {
+       *protocolp = FFI_WIN64;
+-#  else	 /* X86_WIN64 */
++//#  else	 /* X86_WIN64 */
++#  elif defined(X86_64) || (defined (__x86_64__) && defined (X86_DARWIN))      
++    } else if (strcmp(*protocolnamep, "win64") == 0) {
++      *protocolp = FFI_WIN64;
++    } else if (strcmp(*protocolnamep, "unix64") == 0) {
++      *protocolp = FFI_UNIX64;
++#  elif defined(X86_WIN32)
+     } else if (strcmp(*protocolnamep, "cdecl") == 0 ||
+ 	       strcmp(*protocolnamep, "sysv") == 0) {
+       *protocolp = FFI_SYSV;
+@@ -1633,13 +1639,28 @@
+       *protocolp = FFI_THISCALL;
+     } else if (strcmp(*protocolnamep, "fastcall") == 0) {
+       *protocolp = FFI_FASTCALL;
+-#    if defined(X86_WIN32)
+     } else if (strcmp(*protocolnamep, "mscdecl") == 0) {
+       *protocolp = FFI_MS_CDECL;
+-#    elif defined(X86_64)	/* X86_WIN32 */
+-    } else if (strcmp(*protocolnamep, "unix64") == 0) {
+-      *protocolp = FFI_UNIX64;
+-#    endif  /* X86_64 */
++    } else if (strcmp(*protocolnamep, "pascal") == 0) {
++      *protocolp = FFI_PASCAL;
++    } else if (strcmp(*protocolnamep, "register") == 0) {
++      *protocolp = FFI_REGISTER;
++#  else 
++    } else if (strcmp(*protocolnamep, "cdecl") == 0 ||
++	       strcmp(*protocolnamep, "sysv") == 0) {
++      *protocolp = FFI_SYSV;
++    } else if (strcmp(*protocolnamep, "thiscall") == 0) {
++      *protocolp = FFI_THISCALL;
++    } else if (strcmp(*protocolnamep, "fastcall") == 0) {
++      *protocolp = FFI_FASTCALL;
++    } else if (strcmp(*protocolnamep, "stdcall") == 0) {
++      *protocolp = FFI_STDCALL;
++    } else if (strcmp(*protocolnamep, "pascal") == 0) {
++      *protocolp = FFI_PASCAL;
++    } else if (strcmp(*protocolnamep, "register") == 0) {
++      *protocolp = FFI_REGISTER;
++    } else if (strcmp(*protocolnamep, "mscdecl") == 0) {
++      *protocolp = FFI_MS_CDECL;
+ #  endif  /* X86_WIN64 */
+     } else {
+       Tcl_AppendResult(interp, "unknown protocol \"", *protocolnamep,
