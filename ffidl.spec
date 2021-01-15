@@ -2,7 +2,7 @@ Summary: Extension for Calling C Libraries from Tcl
 Name: ffidl
 Version: 0.8b0
 Release: 1
-License: BSD
+License: BSD-3-Clause
 Group: Development/Libraries/Tcl
 BuildRequires: autoconf
 BuildRequires: tcl-devel >= 8.6
